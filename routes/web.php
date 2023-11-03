@@ -64,3 +64,4 @@ Route::middleware(['auth', 'verified'])->group(function() {
 });
 
 require __DIR__.'/auth.php';
+// Firdaus Akbar Amrullah 6706223004

@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+//Firdaus Akbar Amrullah 6706223004
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;

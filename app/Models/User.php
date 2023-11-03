@@ -1,5 +1,5 @@
 <?php
-
+// Firdaus Akbar Amrullah 6706223004
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
