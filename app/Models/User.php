@@ -1,7 +1,5 @@
 <?php
 
-// {{-- Firdaus Akbar Amrullah (6706223004) --}}
-
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -19,17 +17,14 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-
     protected $fillable = [
         'username',
         'fullname',
         'email',
         'password',
         'address',
-        'phoneNumber',
         'birthdate',
-        'agama',
-        'jenisKelamin'
+        'phoneNumber',
     ];
 
     /**
@@ -49,6 +44,5 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'password' => 'hashed',
     ];
 }

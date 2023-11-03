@@ -1,11 +1,10 @@
 <?php
 
-// {{-- Firdaus Akbar Amrullah (6706223004) --}}
-
-use App\Http\Controllers\CollectionController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\CollectionController;
+use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\DetailTransactionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,8 +12,8 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 |
 | Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
 |
 */
 
@@ -22,24 +21,46 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::middleware(['auth', 'verified'])->group(function() {
+    // Routing ke dashboard
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+    
+    // Routing ke User Controller
+    Route::get('/user', [UserController::class, 'index'])->name('showUser');
+    Route::get('/userRegistration', [UserController::class, 'create'])->name('registerUser');
+    Route::post('/userStore',[UserController::class, 'store']);
+    Route::get('/userView/{user}',[UserController::class, 'show']);
+    Route::post('/userUpdate', [UserController::class, 'update']);
+    
+    Route::get('/getAllUsers', [UserController::class,
+    'getAllUsers']);
+    
+    // Routing ke CollectionController
+    Route::get('/koleksi',[CollectionController::class, 'index'])->name('showKoleksi');
+    Route::get('/koleksiTambah',[CollectionController::class, 'create'])->name('tambahKoleksi');
+    Route::post('/koleksiStore',[CollectionController::class, 'store']);
+    Route::get('/koleksiView/{collection}',[CollectionController::class, 'show']);
+    Route::post('/koleksiUpdate', [CollectionController::class, 'update']);
+    
+    Route::get('/getAllCollections', [CollectionController::class,
+    'getAllCollections']);
+    
+    // Routing ke TransactionController
+    Route::get('/transaksi',[TransactionController::class, 'index'])->name('transaksi');
+    Route::get('/transaksiTambah',[TransactionController::class, 'create'])->name('tambahTransaksi');
+    Route::post('/transaksiStore',[TransactionController::class, 'store']);
+    Route::get('/transaksiView/{transaction}',[TransactionController::class, 'show']);
+    
+    Route::get('/getAllTransactions', [TransactionController::class,
+    'getAllTransactions']);
 
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    // Routing ke DetailTransactionController
+    Route::get('/detailTransactionKembalikan/{detailTransactionId}', [DetailTransactionController::class, 'detailTransactionKembalikan']);
+    Route::post('/detailTransactionUpdate', [DetailTransactionController::class, 'update']);
 
-    Route::get('/user', [UserController::class, 'index'])->name('user.daftarPengguna');
-    Route::get('/userRegistration', [UserController::class, 'create'])->name('user.registrasi');
-    Route::post('/userStore', [UserController::class, 'store'])->name('user.storePengguna');
-    Route::get('/userView/{user}', [UserController::class, 'show'])->name('user.infoPengguna');
-
-    Route::get('/koleksi', [CollectionController::class, 'index'])->name('koleksi.daftarKoleksi');
-    Route::get('/koleksiTambah', [CollectionController::class, 'create'])->name('koleksi.registrasi');
-    Route::post('/koleksiStore', [CollectionController::class, 'store'])->name('koleksi.storeKoleksi');
-    Route::get('/koleksiView/{collection}', [CollectionController::class, 'show'])->name('koleksi.infoKoleksi');
+    Route::get('/getAllDetailTransactions/{transactionId}', [DetailTransactionController::class, 'getAllDetailTransactions']);
 });
 
 require __DIR__.'/auth.php';

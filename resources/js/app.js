@@ -1,6 +1,4 @@
-import 'flowbite';
 import './bootstrap';
-import 'laravel-datatables-vite';
 
 import Alpine from 'alpinejs';
 
